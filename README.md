@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # MERN Authentication
 
 A professional, secure, and modern authentication system built with the MERN stack. Features include OTP verification via Gmail, JWT-based authentication, bcrypt password hashing, and robust security best practices. The frontend is crafted with React.js and Tailwind CSS for a seamless user experience.
