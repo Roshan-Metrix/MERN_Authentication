@@ -82,5 +82,4 @@ This project is licensed under the [MIT License](license.txt).
 ---
 
 > **Ready to use, secure, and scalable authentication for your next MERN project!**
-=======
 
