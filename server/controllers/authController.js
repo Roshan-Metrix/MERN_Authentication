@@ -17,7 +17,7 @@ export const registerUser = async (req, res) => {
            return res.json({ success:false, message:"User already exists"});
         }
 
-        const hashedPassword = await bcrypt.hash(10,password);
+        const hashedPassword = await bcrypt.hash(password,10);
 
         const user = new userModel({
             name,
@@ -79,3 +79,16 @@ export const loginUser = async (req,res) => {
     }
 }
 
+export const logoutUser = async (req, res) => {
+    try{
+        res.clearCookie('token',{
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        })
+
+        return res.json({success:true,message:"Logged Out"});
+    } catch (error) {
+        return res.json({ success:false,message:error.message });
+    }
+}
