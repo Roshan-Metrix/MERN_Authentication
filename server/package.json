@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "mern_authentication",
   "version": "1.0.0",
   "main": "server.js",
   "type":"module",
@@ -8,7 +8,7 @@
     "server": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Roshan Patel",
   "license": "ISC",
   "description": "",
   "dependencies": {
