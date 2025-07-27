@@ -10,7 +10,7 @@ export const registerUser = async (req, res) => {
         return res.json({success:false,message:'Missing Datails'});
     }
 
-    try{
+       try{
 
         const existingUser = await userModel.findOne({email})
         
@@ -41,7 +41,7 @@ export const registerUser = async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to: email,
         subject: 'Welcome To MERN Authentication',
-        text: `Welcome to Roshan-Metrix website . Your Account has been created with email id : ${email}`
+        text: `Welcome to Roshan-Metrix website . Your Account has been created with email id : ${email}`,
     }
     await transporter.sendMail(mailOptions);
 
