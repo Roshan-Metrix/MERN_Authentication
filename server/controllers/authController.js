@@ -102,3 +102,74 @@ export const logoutUser = async (req, res) => {
         return res.json({ success:false,message:error.message });
     }
 }
+
+export const sendVerifyOtp = async (req,res) => {
+    //Send Verification OTP to the USer's Email
+    try{
+        // userId fetching from token (from middleware)
+     const userId   = req.userId;
+
+     const user = await userModel.findById(userId);
+
+     if(user.isAccountVerified){
+        return res.json({success:false,message:"Account Already verified"})
+     }
+
+     // generate 6 digit otp
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+
+    user.verifyOtp = otp;
+    user.verifyOtpExpireAt = Date.now() + 24 * 60 * 60 * 1000;
+
+    await user.save();
+
+    const mailOption = {
+        from: process.env.SENDER_EMAIL,
+        to: user.email,
+        subject: 'Account Verification Otp',
+        text: `Your Otp is ${otp} . Please verify your account using this Otp.`,
+    }
+
+    await transporter.sendMail(mailOption);
+
+    return res.json({success:true,message:"Verification Otp sent in email"});
+
+    }catch (error){
+        res.json({success:false,message:error.message});
+    }
+}
+
+export const verifyEmail = async (req,res) => {
+    const userId = req.userId;
+    const {otp} = req.body;
+
+    if(!userId || !otp){
+        return res.json({success:false,message:'Missing Details'});
+    }
+
+    try{
+        const user = await userModel.findById(userId);
+
+        if(!user){
+            return res.json({success:false,message:'User not found'});
+        }
+
+        if(user.verifyOtp === '' || user.verifyOtp !== otp){
+            return res.json({ success:false,message:'Invalid Otp'});
+        }
+
+        if(user.verifyOtpExpireAt < Date.now()){
+            return res.json({ success:false,message:'Otp Expired'});
+        }
+
+        user.isAccountVerified = true;
+        user.verifyOtp = '';
+        user.verifyOtpExpireAt = 0;
+
+       await user.save();
+       return res.json({success:true,message:'Email verified successfully'})
+
+    }catch (error){
+        return res.json({success:false,message:error.message})
+    }
+}
