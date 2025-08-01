@@ -50,10 +50,13 @@ const Login = () => {
  }
 
   return (
-    <div className='flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-100 to-gray-50'>
+    <div className='flex items-center justify-center min-h-screen px-6 sm:px-0 '>
 
-      <img onClick={() => navigate('/')} src={assets.logo} alt='' className='absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer' />
-
+<div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-20 left-3'>
+      <img  src={assets.logo} alt='' className='w-26 sm:w-32 ' />
+      <span className='text-gray-800 font-semibold sm:text-5xl text-3xl sm:pt-11 pt-9'>MernAuth</span>
+      </div>
+       
       <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-indigo-300 text-sm'>
 
         <h2 className='text-3xl font-semibold text-white text-center mb-3'>{state === 'Sign Up' ? 'Create account' : 'Login'}</h2>

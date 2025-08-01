@@ -7,9 +7,11 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0'>
+    <div className='w-full flex justify-between items-center p-4 sm:p-4 sm:px-20 absolute top-0'>
 
-        <img src={assets.logo} alt="" className='w-28 sm:w-32' />
+       <div className='flex items-center gap-2 sm:gap-1'>
+        <img src={assets.logo} alt="" className='w-28 sm:w-32' /><span className=' text-gray-800 font-semibold sm:text-5xl text-3xl pt-3'>MernAuth</span>
+        </div>
 
         <button 
         onClick={() => navigate('/login')}
