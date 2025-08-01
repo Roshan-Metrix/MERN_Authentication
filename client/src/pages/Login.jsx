@@ -9,7 +9,7 @@ const Login = () => {
  
  const navigate = useNavigate();
 
- const { backendUrl, setIsLoggedin } = useContext(AppContent);
+ const { backendUrl, setIsLoggedin, getUserData } = useContext(AppContent);
 
 
  const [state, setState] = useState('Sign Up')
@@ -28,6 +28,7 @@ const Login = () => {
 
       if(data.success){
         setIsLoggedin(true)
+        getUserData()
         navigate('/')
       }else{
         toast.error(data.message)
@@ -38,14 +39,14 @@ const Login = () => {
 
       if(data.success){
         setIsLoggedin(true)
+        getUserData()
         navigate('/')
       }else{
         toast.error(data.message)
       }
     }
   }catch(error){
-    toast.error(data.message)
-    console.log(data.message);
+    toast.error(error.message)
   }
  }
 
@@ -58,11 +59,8 @@ const Login = () => {
       </div>
        
       <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-indigo-300 text-sm'>
-
         <h2 className='text-3xl font-semibold text-white text-center mb-3'>{state === 'Sign Up' ? 'Create account' : 'Login'}</h2>
-
         <p className='text-sm mb-6 text-center'>{state === 'Sign Up' ? 'Create your account' : 'Login to your account!'}</p>
-
         <form onSubmit={onSubmitHandler}>
           {state === 'Sign Up' && (
              <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]'>
