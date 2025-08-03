@@ -87,6 +87,27 @@ npm run dev
 
 ---
 
+## Screenshot
+
+<div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 800px; margin: auto;">
+
+<img src="./screenshots/screenshot1.png" alt="HomePage Screenshot" width="350"/>
+<img src="./screenshots/screenshot2.png" alt="SignUp Screenshot" width="350"/>
+<img src="./screenshots/screenshot3.png" alt="Login Screenshot" width="350"/>
+<img src="./screenshots/screenshot4.png" alt="ResetPassword Screenshot" width="350"/>
+<img src="./screenshots/screenshot3.png" alt="EmailVerification Screenshot" width="350"/>
+
+</div>
+
+<div align="center" style="max-width: 800px; margin: auto;">
+
+<img src="./screenshots/email.screenshot1.png" alt="Welcome Mail Screenshot" width="350"/>
+<img src="./screenshots/email.screenshot2.png" alt="Email Verification Mail Screenshot" width="350"/>
+<img src="./screenshots/email.screenshot3.png" alt="Password Reset Success Screenshot" width="350"/>
+
+</div>
+
+
 ## 📄 License
 
 This project is licensed under the [MIT License](license.txt).
