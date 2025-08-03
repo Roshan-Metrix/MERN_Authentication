@@ -87,7 +87,7 @@ npm run dev
 
 ---
 
-## Screenshot
+## Screenshots
 
 <div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 800px; margin: auto;">
 
@@ -106,7 +106,6 @@ npm run dev
 <img src="./screenshots/email.screenshot3.png" alt="Password Reset Success Screenshot" width="350" height="500px"/>
 
 </div>
-
 
 ## 📄 License
 
