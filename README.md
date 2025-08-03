@@ -7,6 +7,7 @@ A professional, secure, and modern authentication system built with the MERN sta
 ## ✨ Features
 
 - **OTP Verification:** Secure one-time password sent to user’s Gmail for authentication.
+- **RESET Password functionality:** Reset password by verifying otp.
 - **JWT Authentication:** Stateless and secure session management.
 - **Bcrypt Password Hashing:** Strong password encryption for user data protection.
 - **Modern UI:** Responsive and attractive interface using React.js & Tailwind CSS.
@@ -33,12 +34,23 @@ npm install
 #### Create a `.env` file in the `backend` directory:
 
 ```env
-PORT = 3000
-MONGODB_URI = your mongodb url i.e 'mongodb://localhost:27017' for locally 
-JWT_SECRET = your jwt secret i.e 'hello12'
+
+PORT =  any port i.e 3000 
+# Use mongodb Atlas or local server
+MONGODB_URI = Your Mongodb url or locally : 'mongodb://localhost:27017' 
+
+#Json Web Token secret
+JWT_SECRET = ''
+
+# node_env -> development / production
 NODE_ENV = 'development'
-EMAIL_ID = your email
-PASSWORD = your email pass
+
+# I have use google smtp; u can use any smtp mail provider
+SMTP_USER = "example"
+SMTP_PASS = "abcdefghijs" # app pass google
+SENDER_EMAIL = "example@gmail.com"
+
+FRONTEND_URI = ''
 ```
 
 > **Note:** Use [Gmail App Passwords](https://support.google.com/accounts/answer/185833) for secure email sending.
