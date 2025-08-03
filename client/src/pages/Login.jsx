@@ -51,7 +51,7 @@ const Login = () => {
  }
 
   return (
-    <div className='flex items-center justify-center min-h-screen px-6 sm:px-0 '>
+    <div className='flex items-center justify-center min-h-screen bg-gray-100 px-6 sm:px-0 '>
 
 <div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-20 left-3'>
       <img  src={assets.logo} alt='' className='w-26 sm:w-32 ' />
@@ -90,7 +90,7 @@ const Login = () => {
 
             <p onClick={() => navigate('/reset-password')} className='mb-4 text-indigo-500 cursor-pointer'>Forgot Password ?</p>
 
-            <button className='w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium'>{state}</button>
+            <button className='w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium cursor-pointer'>{state}</button>
         </form>
 
         {state === 'Sign Up' ? (
