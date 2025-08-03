@@ -1,4 +1,4 @@
-import React , { useContext, useState } from 'react'
+import React , { useContext, useEffect } from 'react'
 import { assets } from '../assets/assets'
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -6,21 +6,22 @@ import { AppContent } from '../context/AppContext'
 import { useNavigate } from 'react-router-dom'
 
 const EmailVerify = () => {
-
+   
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
-  
-
-  const [otp,setOtp] = useState(Array(6));
  
-const { backendUrl, getAuthState } = useContext(AppContent);
+const { backendUrl, isLoggedin, userData, getUserData } = useContext(AppContent);
 
   const onSubmitHandler = async (e) => {
        try{
         e.preventDefault();
-        axios.defaults.withCredentials = true;
+        const otpArray = inputRefs.current.map(e => e.value)
+        const otp = otpArray.join('')
+
         const { data } = await axios.post(backendUrl + '/api/auth/verify-account',{otp})
         if(data.success){
-          getAuthState();
+          toast.success(data.message)
+          getUserData()
           navigate('/');
         }else{
           toast.error(data.message)
@@ -45,9 +46,22 @@ const handleKeyDown = (e, index) => {
   }
 }
   
+const handlePaste = (e) => {
+  const paste = e.clipboardData.getData('text')
+  const pasteArray = paste.split('');
+  pasteArray.forEach((char, index) => {
+   if(inputRefs.current[index]){
+    inputRefs.current[index].value = char;
+   }
+  })
+}
+
+useEffect(() => {
+   isLoggedin && userData && userData.isAccountVerified && navigate('/')
+},[isLoggedin,userData]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-20 left-3'>
       <img  src={assets.logo} alt='' className='w-26 sm:w-32 ' />
       <span className='text-gray-800 font-semibold sm:text-5xl text-3xl sm:pt-11 pt-9 '>MernAuth</span>
@@ -58,13 +72,11 @@ const handleKeyDown = (e, index) => {
         <p className="text-gray-400 mb-7">Enter the 6-digit OTP sent to your email</p>
 
         <form onSubmit={onSubmitHandler} className="flex flex-col items-center">
-          <div className="flex gap-3 mb-6 justify-center">
+          <div className="flex gap-3 mb-6 justify-center" onPaste={handlePaste}>
             {Array(6).fill(0).map((_, index) => (
-              <input
+              <input   
               type="text"
                 key={index}
-                // onChange = {(e) => setOtp(e.target.value)}
-                // value={otp}
                 maxLength={1}
                 pattern="[0-9]*"
                 required
@@ -77,7 +89,7 @@ const handleKeyDown = (e, index) => {
           </div>
           <button
             type="submit"
-            className="bg-gradient-to-r from-blue-600 to-blue-400 text-white text-lg font-medium py-3 rounded-lg w-full shadow hover:from-blue-700 hover:to-blue-500 transition"
+            className="bg-gradient-to-r from-blue-600 to-blue-400 text-white text-lg font-medium py-3 rounded-lg w-full shadow hover:from-blue-700 hover:to-blue-500 transition cursor-pointer"
           >
             Verify
           </button>
