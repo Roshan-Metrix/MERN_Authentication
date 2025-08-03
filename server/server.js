@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 connectDB();
 
-const allowedOrigins = 'https://mern-authentication-backend-z4gl.onrender.com';
+const allowedOrigins = process.env.FRONTEND_URI;
 
 app.use(express.json());
 app.use(cookieParser());
