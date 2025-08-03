@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel.js'
 import transporter from '../config/nodemailer.js';
+import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE, WELCOME_TEMPLATE,PASSWORD_RESET_SUCCESSFULLY_TEMPLATE } from '../config/emailTemplates.js';
 
 // Register User 
 export const registerUser = async (req, res) => {
@@ -42,7 +43,8 @@ export const registerUser = async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to: email,
         subject: 'Welcome To MERN Authentication',
-        text: `Welcome to Roshan-Metrix website . Your Account has been created with email id : ${email}`,
+        // text: `Welcome to Roshan-Metrix website . Your Account has been created with email id : ${email}`,
+        html: WELCOME_TEMPLATE.replace("{{email}}",user.email)
     }
     await transporter.sendMail(mailOptions);
 
@@ -131,7 +133,8 @@ export const sendVerifyOtp = async (req,res) => {
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: 'Account Verification Otp',
-        text: `Your Otp is ${otp} . Please verify your account using this Otp.`,
+        // text: `Your Otp is ${otp} . Please verify your account using this Otp.`,
+        html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}",otp).replace("{{email}}",user.email)
     }
 
     await transporter.sendMail(mailOption);
@@ -214,7 +217,8 @@ export const sendResetOtp = async (req,res) => {
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: 'Password Reset OTP',
-        text: `Your OTP for resetting your password is ${otp}. Use this OTP to proceed with resetting your password`,
+        // text: `Your OTP for resetting your password is ${otp}. Use this OTP to proceed with resetting your password`,
+       html: PASSWORD_RESET_TEMPLATE.replace("{{otp}}",otp).replace("{{email}}",user.email)
     }
     await transporter.sendMail(mailOption);
 
@@ -262,6 +266,8 @@ try{
         to: user.email,
         subject: 'Password Reset Successfully',
         text: `Your Password for ${email} is reset successfully.`,
+        html: PASSWORD_RESET_SUCCESSFULLY_TEMPLATE.replace("{{email}}",user.email)
+
     }
     await transporter.sendMail(mailOption);
    }
