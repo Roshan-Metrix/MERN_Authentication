@@ -101,9 +101,9 @@ npm run dev
 
 <div align="center" style="max-width: 800px; margin: auto;">
 
-<img src="./screenshots/email.screenshot1.png" alt="Welcome Mail Screenshot" width="350"/>
-<img src="./screenshots/email.screenshot2.png" alt="Email Verification Mail Screenshot" width="350"/>
-<img src="./screenshots/email.screenshot3.png" alt="Password Reset Success Screenshot" width="350"/>
+<img src="./screenshots/email.screenshot1.png" alt="Welcome Mail Screenshot" width="350" height="500px"/>
+<img src="./screenshots/email.screenshot2.png" alt="Email Verification Mail Screenshot" width="350" height="500px"/>
+<img src="./screenshots/email.screenshot3.png" alt="Password Reset Success Screenshot" width="350" height="500px"/>
 
 </div>
 
