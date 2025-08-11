@@ -8,7 +8,11 @@ import { useNavigate } from 'react-router-dom'
 const EmailVerify = () => {
    
   axios.defaults.withCredentials = true;
+  
   const navigate = useNavigate();
+
+  // handling input otp 
+  const inputRefs = React.useRef([])
  
 const { backendUrl, isLoggedin, userData, getUserData } = useContext(AppContent);
 
@@ -31,8 +35,6 @@ const { backendUrl, isLoggedin, userData, getUserData } = useContext(AppContent)
        }
   }
 
-  // handling input otp 
-  const inputRefs = React.useRef([])
 
   const handleInput = (e, index) => {
     if(e.target.value.length > 0 && index < inputRefs.current.length - 1){

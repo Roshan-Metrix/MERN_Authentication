@@ -150,10 +150,10 @@ export const sendVerifyOtp = async (req,res) => {
 export const verifyEmail = async (req,res) => {
     const userId = req.userId;
     const {otp} = req.body;
+     
+    if(!userId) return res.json({success:false,message:'Not Authorized, Please login again'});
 
-    if(!userId || !otp){
-        return res.json({success:false,message:'Missing Details'});
-    }
+    if(!otp) return res.json({success:false,message:'Missing Details'});
 
     try{
         const user = await userModel.findById(userId);
@@ -233,9 +233,11 @@ export const sendResetOtp = async (req,res) => {
 export const resetPassword = async (req,res) => {
     const { email, otp ,newPassword } = req.body;
     
-    if(!email || !otp || !newPassword){
-        return res.json({success:false,message:'Email, OTP and new password is required'});
-    }
+    if(!email) return res.json({success:false,message:'Email is required'});
+
+    if(!otp) return res.json({success:false,message:'OTP is required'});
+
+    if(!newPassword) return res.json({success:false,message:'Password is required'});
 
 try{
    
@@ -260,17 +262,16 @@ try{
 
    await user.save();
 
-   if(user.password){
     const mailOption = {
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: 'Password Reset Successfully',
         text: `Your Password for ${email} is reset successfully.`,
         html: PASSWORD_RESET_SUCCESSFULLY_TEMPLATE.replace("{{email}}",user.email)
-
     }
+
     await transporter.sendMail(mailOption);
-   }
+   
 
    return res.json({success:true,message:'Password has been reset successfully'});
 
