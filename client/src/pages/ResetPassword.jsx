@@ -74,9 +74,9 @@ const onSubmitNewPassword = async (e) => {
 
   return (
        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-  <div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-20 left-3'>
-      <img  src={assets.logo} alt='' className='w-26 sm:w-32 ' />
-      <span className='text-gray-800 font-semibold sm:text-5xl text-3xl sm:pt-11 pt-9 '>MernAuth</span>
+  <div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-5 left-3'>
+      <img  src={assets.logo} alt='' className='w-24 sm:w-30 ' />
+      <span className='text-gray-800 font-semibold sm:text-5xl text-4xl sm:pt-11 pt-7'>MernAuth</span>
       </div>
 
 {/* Enter email id */}

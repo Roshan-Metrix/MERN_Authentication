@@ -53,9 +53,9 @@ const Login = () => {
   return (
     <div className='flex items-center justify-center min-h-screen bg-gray-100 px-6 sm:px-0 '>
 
-<div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-20 left-3'>
-      <img  src={assets.logo} alt='' className='w-26 sm:w-32 ' />
-      <span className='text-gray-800 font-semibold sm:text-5xl text-3xl sm:pt-11 pt-9'>MernAuth</span>
+<div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-5 left-3'>
+      <img  src={assets.logo} alt='' className='w-22 sm:w-25 ' />
+      <span className='text-gray-800 font-semibold sm:text-4xl text-3xl sm:pt-8 pt-7'>MernAuth</span>
       </div>
        
       <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-indigo-300 text-sm'>
