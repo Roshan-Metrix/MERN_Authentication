@@ -8,8 +8,9 @@ export const AppContentProvider = (props) => {
   
     axios.defaults.withCredentials = true;
 
-    const backendUrl = 'https://mern-authentication-backend-z4gl.onrender.com';
+    const backendUrl = 'http://localhost:4000'; //change your backend url here
 
+    
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState(false);
    

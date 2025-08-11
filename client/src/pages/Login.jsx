@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import { AppContent } from '../context/AppContext';
 import axios from 'axios'
 import { toast } from 'react-toastify'
+//for logo
+import { FcGoogle } from "react-icons/fc";
+//for auth
+import { auth,googleProvider } from './firebase';  //here in this firebase page add the react script why is genreated by the fire base
+import { getAuth,signInWithPopup,GithubAuthProvider } from 'firebase/auth';
 
 const Login = () => {
  
@@ -48,7 +53,35 @@ const Login = () => {
   }catch(error){
     toast.error(error.message)
   }
- }
+}
+//function for sign in with google
+const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    // Retrieve the Firebase ID token to send to the backend for authentication and user verification
+    const token = await user.getIdToken();
+    axios.defaults.withCredentials = true;
+    // Send token wich we got for the google to backend
+    const { data } = await axios.post(
+      backendUrl + '/api/auth/google',
+      {},
+      { headers:{
+        Authorization:`Bearer ${token}`
+      }}
+    );
+    if (data.success) {
+      setIsLoggedin(true);
+      getUserData();
+      navigate('/');
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    console.error("Google sign-in error:", error);
+    toast.error(error.message);
+  }
+};
 
   return (
     <div className='flex items-center justify-center min-h-screen bg-gray-100 px-6 sm:px-0 '>
@@ -69,6 +102,7 @@ const Login = () => {
             onChange={(e) => setName(e.target.value)} value={name} 
             type="text" 
             placeholder='Full Name' required />
+
             </div>
           )}
          
@@ -91,6 +125,23 @@ const Login = () => {
             <p onClick={() => navigate('/reset-password')} className='mb-4 text-indigo-500 cursor-pointer'>Forgot Password ?</p>
 
             <button className='w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-900 text-white font-medium cursor-pointer'>{state}</button>
+
+        {/* Added the sign in with goole and FaceBook */}
+          <br />
+          <br />
+          <button onClick={signInWithGoogle} className="flex items-center gap-3 px-10 py-2
+          m-2 mx-8
+        border border-gray-300 rounded-md shadow-sm
+        bg-white text-gray-700 font-medium
+        hover:bg-gray-50 active:scale-[0.98]
+        transition-transform duration-75
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+             <span>{state } With Goolge</span>  
+             <FcGoogle className="w-5 h-5" />
+            </button>
+          {/* <br />
+          <button onClick={signINWithGitHUB} >GitHub</button> */}
         </form>
 
         {state === 'Sign Up' ? (

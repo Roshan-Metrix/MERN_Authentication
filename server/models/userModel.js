@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required:false //changed true->false because from google we can get the password whil creating account
     },
     verifyOtp:{
         type: String,

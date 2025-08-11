@@ -3,11 +3,14 @@ import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel.js'
 import transporter from '../config/nodemailer.js';
 import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE, WELCOME_TEMPLATE,PASSWORD_RESET_SUCCESSFULLY_TEMPLATE } from '../config/emailTemplates.js';
+import { send } from '@emailjs/browser';
+import admin from '../config/firebase-admin.js'
+
+
 
 // Register User 
 export const registerUser = async (req, res) => {
-    const { name, email, password} = req.body;
-
+    const { name, email, password} = req.body;    
     if(!name || !email || !password){
         return res.json({success:false,message:'Missing Datails'});
     }
@@ -91,6 +94,70 @@ export const loginUser = async (req,res) => {
     } catch(error){
        return res.json({success:false,message:error.message});
     }
+}
+//goolge sign-in
+export const goolge=async(req,res)=>{
+
+    try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ success: false, message: "No token provided" });
+    }
+    const idToken = authHeader.split(" ")[1];
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    
+    const userdata={
+        email:decodedToken.email,
+        name:decodedToken.name,
+    }
+    
+    const email=decodedToken.email;
+    const name=decodedToken.name;
+
+    const userdetails = await userModel.findOne({email});
+
+    
+    //if user is present
+    if(userdetails){
+        const token = jwt.sign({id:userdetails._id},process.env.JWT_SECRET,{ expiresIn: '7d'});
+        
+        res.cookie('token',token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+        res.json({ success: true, user: decodedToken});
+    } 
+
+    //if useris not present
+    else{
+        const newuser = new userModel({
+            name,
+            email
+        });
+        //adding the user to user base
+        await newuser.save();
+       
+        const newuserdetails = await userModel.findOne({email});
+        
+
+        const token = jwt.sign({id:newuserdetails._id},process.env.JWT_SECRET,{ expiresIn: '7d'});
+        
+        res.cookie('token',token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+
+        res.json({success:true, user:decodedToken});
+         
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({ success: false, message: "Invalid token" });
+  }
 }
 
 // Logout User

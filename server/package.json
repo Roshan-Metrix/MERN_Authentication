@@ -2,7 +2,7 @@
   "name": "mern_authentication",
   "version": "1.0.0",
   "main": "server.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js"
@@ -17,8 +17,10 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
+    "firebase-admin": "^13.4.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.4",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "nodemon": "^3.1.10"
   }
 }
