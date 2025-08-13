@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/app
+
+volumes:
+  mongo-data:

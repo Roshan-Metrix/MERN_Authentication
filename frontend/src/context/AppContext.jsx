@@ -8,7 +8,7 @@ export const AppContentProvider = (props) => {
   
     axios.defaults.withCredentials = true;
 
-    const backendUrl = 'https://mern-authentication-backend-z4gl.onrender.com';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState(false);
@@ -25,7 +25,6 @@ export const AppContentProvider = (props) => {
 
     const getAuthState = async () => {
       try{
-         axios.defaults.withCredentials = true;
         const {data} = await axios.get(backendUrl + '/api/auth/is-auth')
         if(data.success){
           setIsLoggedin(true)

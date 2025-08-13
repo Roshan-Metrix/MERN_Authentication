@@ -8,7 +8,11 @@ import { useNavigate } from 'react-router-dom'
 const EmailVerify = () => {
    
   axios.defaults.withCredentials = true;
+  
   const navigate = useNavigate();
+
+  // handling input otp 
+  const inputRefs = React.useRef([])
  
 const { backendUrl, isLoggedin, userData, getUserData } = useContext(AppContent);
 
@@ -31,8 +35,6 @@ const { backendUrl, isLoggedin, userData, getUserData } = useContext(AppContent)
        }
   }
 
-  // handling input otp 
-  const inputRefs = React.useRef([])
 
   const handleInput = (e, index) => {
     if(e.target.value.length > 0 && index < inputRefs.current.length - 1){
@@ -62,9 +64,10 @@ useEffect(() => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-20 left-3'>
-      <img  src={assets.logo} alt='' className='w-26 sm:w-32 ' />
-      <span className='text-gray-800 font-semibold sm:text-5xl text-3xl sm:pt-11 pt-9 '>MernAuth</span>
+    
+<div onClick={() => navigate('/')} className='cursor-pointer flex absolute top-3 sm:left-5 left-3'>
+      <img  src={assets.logo} alt='' className='w-22 sm:w-25 ' />
+      <span className='text-gray-800 font-semibold sm:text-4xl text-3xl sm:pt-8 pt-7'>MernAuth</span>
       </div>
 
       <div className="max-w-md w-full rounded-2xl shadow-lg p-8 text-center bg-slate-900">
